@@ -2830,7 +2830,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1045399748842119, guid: 37418af9797620647977491382c073ae, type: 3}
       propertyPath: _layerMask.m_Bits
-      value: 64
+      value: 192
       objectReference: {fileID: 0}
     - target: {fileID: 3396103319353747175, guid: 37418af9797620647977491382c073ae, type: 3}
       propertyPath: m_Name
