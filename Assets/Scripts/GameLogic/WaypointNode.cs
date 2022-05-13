@@ -39,6 +39,11 @@ public class WaypointNode : MonoBehaviour
     /// Remaining enemies in the node
     /// </summary>
     public int EnemyRemains { get { return _enemyRemains; } set { _enemyRemains = value; } }
+
+    /// <summary>
+    /// Is this waypoint node encountered by player at the moment
+    /// </summary>
+    public bool IsEncountered { get; set; } = false;
     #endregion
 
     #region UNITY Methods
@@ -84,6 +89,7 @@ public class WaypointNode : MonoBehaviour
             _enemies[i].CurrentNode = this;
         }
         _isCleared = false;
+        IsEncountered = false;
     }
 
     /// <summary>
@@ -98,6 +104,7 @@ public class WaypointNode : MonoBehaviour
             {
                 _enemyRemains--;
 
+                // Check if there are enemies left
                 if (_enemyRemains == 0)
                 {
                     _isCleared = true;

@@ -19,23 +19,32 @@ public class HealthBar : MonoBehaviour
         _healthBar.maxValue = _health.MaxHealth;
         _healthBar.value = _healthBar.maxValue;
 
+        // Subscribe on enemy status events
         GameplayEvents.OnEnemyDamaged.AddListener(UpdateHeathBar);
         GameplayEvents.OnEnemyDead.AddListener(DeactivateHealthBar);
     }
     #endregion
 
     #region PRIVATE Methods
+    /// <summary>
+    /// Updates health bar value on callback
+    /// </summary>
+    /// <param name="go">Callback sender</param>
     private void UpdateHeathBar(GameObject go)
     {
-        if (go.Equals(gameObject.transform.parent))
+        if (Object.ReferenceEquals(go.gameObject, _health.gameObject))
         {
             _healthBar.value = _health.CurHealth;
         }
     }
 
+    /// <summary>
+    /// Deactivates healthbar on the parent game object death
+    /// </summary>
+    /// <param name="agent">Callback sender</param>
     private void DeactivateHealthBar(AI_Agent agent)
     {
-        if (agent.gameObject.name.Equals(gameObject.transform.parent.name))
+        if (Object.ReferenceEquals(agent.gameObject, _health.gameObject))
         {
             gameObject.SetActive(false);
         }

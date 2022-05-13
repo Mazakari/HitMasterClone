@@ -2,14 +2,33 @@
 
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class LevelLoader : MonoBehaviour
 {
+    #region VARIABLES
+    [SerializeField] private Text _tapToStartText = null;
+    private string _text = "Tap To Start";
+    #endregion
+
     #region UNITY Methods
     // Start is called before the first frame update
     void Start()
     {
-        GameplayEvents.OnLevelComplete.AddListener(RestartLevel);    
+        _tapToStartText.text = _text;
+        _tapToStartText.gameObject.SetActive(true);
+
+        GameplayEvents.OnLevelComplete.AddListener(RestartLevel);
+        Time.timeScale = 0f;
+    }
+
+    private void Update()
+    {
+        if (Input.touchCount > 0)
+        {
+            Time.timeScale = 1f;
+            _tapToStartText.gameObject.SetActive(false);
+        }
     }
     #endregion
 

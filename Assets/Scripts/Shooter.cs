@@ -47,7 +47,9 @@ public class Shooter : MonoBehaviour
                 Touch touch = Input.GetTouch(0);
                 if (touch.phase == TouchPhase.Began)
                 {
+                    // Check if there ara any colliders
                     Ray ray = Camera.main.ScreenPointToRay(touch.position);
+                    
                     if (Physics.Raycast(ray, out RaycastHit hitInfo, _shootDistance, _layerMask))
                     {
                         // Rotate player to the target
@@ -55,36 +57,36 @@ public class Shooter : MonoBehaviour
 
                         Shoot(hitInfo.point);
                         GameplayEvents.OnPlayerShoot.Invoke();
-
                         return;
                     }
+
+                    // Shoot into the void if there are no colliders found
+                    Vector3 voidPoint = ray.GetPoint(20f);
+
+                    Shoot(voidPoint);
+                    GameplayEvents.OnPlayerShoot.Invoke();
                 }
             }
         }
     }
-
     #endregion
 
     #region PUBLIC Methods
     /// <summary>
-    /// Shoot bullet in the given direction
+    /// Shoot bullet in the given target
     /// </summary>
     /// <param name="target">Bullet target</param>
     public void Shoot(Vector3 target)
     {
-        GameObject bullet = BulletsPool.Instance.GetBullet();
+        Bullet bullet = BulletsPool.Instance.GetBullet();
         if (bullet != null)
         {
-            Rigidbody rb = bullet.GetComponent<Rigidbody>();
-            if (rb)
-            {
-                bullet.transform.position = _gunBarrel.position;
-                Vector3 direction = target - _gunBarrel.position;
-                bullet.SetActive(true);
+            bullet.transform.position = _gunBarrel.position;
+            Vector3 direction = target - _gunBarrel.position;
+            bullet.gameObject.SetActive(true);
 
-                rb.AddForce(direction * _bulletSpeed, ForceMode.Impulse);
-                _shootTimerActive = true;
-            }
+            bullet.RB.AddForce(direction * _bulletSpeed, ForceMode.Impulse);
+            _shootTimerActive = true;
         }
     }
     #endregion

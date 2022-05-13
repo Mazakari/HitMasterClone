@@ -11,11 +11,11 @@ public class BulletsPool : MonoBehaviour
     [Header("Bullets Pool Settings")]
     [SerializeField] private int _poolSize = 10;
 
-    [SerializeField] private GameObject _bulletPrefab = null;
+    [SerializeField] private Bullet _bulletPrefab = null;
     /// <summary>
     /// Bullets pool
     /// </summary>
-    public List<GameObject> BulletPool { get; private set; } = new List<GameObject> ();
+    public List<Bullet> BulletPool { get; private set; } = new List<Bullet> ();
     #endregion
 
     #region UNITY Methods
@@ -34,11 +34,11 @@ public class BulletsPool : MonoBehaviour
     #endregion
 
     #region PUBLIC Methods
-    public GameObject GetBullet()
+    public Bullet GetBullet()
     {
         for (int i = 0; i < BulletPool.Count; i++)
         {
-            if (!BulletPool[i].activeSelf)
+            if (!BulletPool[i].gameObject.activeSelf)
             {
                 return BulletPool[i];
             }
@@ -50,12 +50,12 @@ public class BulletsPool : MonoBehaviour
     /// Reset bullet position and return it in the pool
     /// </summary>
     /// <param name="bullet">Bullet to reset</param>
-    public void ResetBullet(GameObject bullet)
+    public void ResetBullet(Bullet bullet)
     {
         // Deactivate bullet object
-        bullet.SetActive(false);
+        bullet.gameObject.SetActive(false);
 
-        bullet.GetComponent<Rigidbody>().velocity = Vector3.zero;
+        bullet.RB.velocity = Vector3.zero;
 
         // Reset bullet position
         bullet.transform.position = transform.position;
@@ -71,10 +71,10 @@ public class BulletsPool : MonoBehaviour
     {
         for (int i = 0; i < _poolSize; i++)
         {
-            GameObject bullet = Instantiate(_bulletPrefab, gameObject.transform);
+            Bullet bullet = Instantiate(_bulletPrefab, gameObject.transform);
             bullet.gameObject.SetActive(false);
 
-            BulletPool.Add(bullet.gameObject);
+            BulletPool.Add(bullet);
         }
     }
     #endregion

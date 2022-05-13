@@ -11,6 +11,8 @@ public class AI_WaypointEncounterState : AI_State
     }
     public void Enter(AI_Agent agent)
     {
+        agent.CurrentNode.IsEncountered = true;
+
         // Activates shoot input
         if (agent.CurrentNode.FinishNode)
         {

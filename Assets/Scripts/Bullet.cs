@@ -7,8 +7,13 @@ public class Bullet : MonoBehaviour
 {
     #region VARIABLES
     [SerializeField] private int _damage = 1;
+    [SerializeField] private Rigidbody _rigidbody = null;
+    /// <summary>
+    /// Bullet rigidbody comonent referrence
+    /// </summary>
+    public Rigidbody RB { get { return _rigidbody; } }
 
-    private float _lifetime = 4f;
+    private float _lifetime = 2f;
     private float _curTime = 0f;
     #endregion
 
@@ -19,13 +24,19 @@ public class Bullet : MonoBehaviour
         if (_curTime > _lifetime)
         {
             _curTime = 0f;
-            BulletsPool.Instance.ResetBullet(gameObject);
+            BulletsPool.Instance.ResetBullet(this);
         }
     }
     #endregion
 
     private void OnTriggerEnter(Collider other)
     {
+        AI_Agent agent = other.gameObject.GetComponent<AI_Agent>();
+        if (!agent.CurrentNode.IsEncountered) 
+        { 
+            return; 
+        }
+
         Health enemy = other.gameObject.GetComponent<Health>();
         if (enemy)
         {
@@ -35,6 +46,6 @@ public class Bullet : MonoBehaviour
 
         // Return bullet in the pool
         _curTime = 0f;
-        BulletsPool.Instance.ResetBullet(gameObject);
+        BulletsPool.Instance.ResetBullet(this);
     }
 }
