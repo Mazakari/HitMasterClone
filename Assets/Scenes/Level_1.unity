@@ -2810,7 +2810,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1045399748842118, guid: 37418af9797620647977491382c073ae, type: 3}
       propertyPath: _poolSize
-      value: 3
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1045399748842118, guid: 37418af9797620647977491382c073ae, type: 3}
       propertyPath: _bulletPrefab
@@ -2822,7 +2822,7 @@ PrefabInstance:
       objectReference: {fileID: 963194227}
     - target: {fileID: 1045399748842119, guid: 37418af9797620647977491382c073ae, type: 3}
       propertyPath: _fireDelay
-      value: 1.5
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 1045399748842119, guid: 37418af9797620647977491382c073ae, type: 3}
       propertyPath: _bulletSpeed

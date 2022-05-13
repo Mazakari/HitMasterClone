@@ -9,6 +9,7 @@ public class BulletsPool : MonoBehaviour
     public static BulletsPool Instance = null;
 
     [Header("Bullets Pool Settings")]
+    [Min(1)]
     [SerializeField] private int _poolSize = 10;
 
     [SerializeField] private Bullet _bulletPrefab = null;
@@ -36,6 +37,7 @@ public class BulletsPool : MonoBehaviour
     #region PUBLIC Methods
     public Bullet GetBullet()
     {
+        // Get inactive bullet from the pool
         for (int i = 0; i < BulletPool.Count; i++)
         {
             if (!BulletPool[i].gameObject.activeSelf)
@@ -44,8 +46,13 @@ public class BulletsPool : MonoBehaviour
             }
         }
 
+        CreateBulletsPool();
+        GetBullet();
+
         return null;
     }
+
+
     /// <summary>
     /// Reset bullet position and return it in the pool
     /// </summary>

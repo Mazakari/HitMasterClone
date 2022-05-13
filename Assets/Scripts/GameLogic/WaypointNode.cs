@@ -98,7 +98,7 @@ public class WaypointNode : MonoBehaviour
     /// <param name="enemy">Dead enemy</param>
     private void UpdateEnemyCount(AI_Agent enemy)
     {
-        if (enemy.CurrentNode.Equals(this))
+        if (Object.ReferenceEquals(enemy.CurrentNode, this))
         {
             if (_enemyRemains > 0)
             {

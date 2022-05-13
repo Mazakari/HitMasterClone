@@ -14,11 +14,19 @@ public class AI_DeathState : AI_State
     {
         Animator a = agent.GetComponent<Animator>();
 
-        // Send death callback
-        GameplayEvents.OnEnemyDead.Invoke(agent);
+        BoxCollider[] cols = agent.GetComponents<BoxCollider>();
+
+        // Deactivate trigger colliders
+        foreach (var col in cols)
+        {
+            col.enabled = false;
+        }
 
         // Activate enemy ragdoll
         a.enabled = false;
+
+        // Send death callback
+        GameplayEvents.OnEnemyDead.Invoke(agent);
     }
 
     public void Update(AI_Agent agent)
@@ -29,6 +37,13 @@ public class AI_DeathState : AI_State
     public void Exit(AI_Agent agent)
     {
         //Debug.Log("AI_DeathState.Exit");
+    }
+    #endregion
+
+    #region PRIVATE Methods
+    private void DeactivateColliders()
+    {
+        
     }
     #endregion
 }
